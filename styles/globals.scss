@@ -33,9 +33,6 @@ nav {
   display: flex;
   justify-content: space-between;
   align-content: center;
-  position: sticky;
-  top: 0;
-  left: 0;
 }
 
 header {
@@ -103,7 +100,7 @@ nav {
 
 main {
   background-color: $black-alt;
-  min-height: 100%;
+  min-height: 100vh;
   padding: 0 3rem;
 }
 
