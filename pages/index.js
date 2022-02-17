@@ -91,16 +91,21 @@ export default function Home() {
   }, [showFilter]);
 
   const toggleActiveClass = (e) => {
-
+    const navItems = document.querySelectorAll(".nav-item");
     const nearest = document.getElementById("nearest-rides");
     const upcoming = document.getElementById("upcoming-rides");
     const past = document.getElementById("past-rides");
 
-    nearest.contains(e.target) && setResult(sortedRides) ;
+    nearest.contains(e.target) && setResult(sortedRides);
     upcoming.contains(e.target) && setResult(upcomingRides);
     past.contains(e.target) && setResult(pastRides);
 
-   e.target.classList.add("active-link")
+    e.target.classList.add('active-link')
+    for (let i = 0; i < navItems.length; i++) {
+      !navItems[i].contains(e.target) &&
+        navItems[i].classList.contains("active-link") &&
+        navItems[i].classList.remove("active-link");
+    }
   };
 
   return (
