@@ -52,9 +52,8 @@ export default function Home() {
       setResult(
         sortedRides.filter((r) => r.state.toLowerCase() === value.toLowerCase())
       );
-    setSelectedCity('');
+    setSelectedCity("");
   };
-
 
   const handleCityChange = (e) => {
     const { value } = e.target;
@@ -81,12 +80,32 @@ export default function Home() {
       }
     };
 
+    setSelectedState("");
+    setSelectedCity("");
+
     document.addEventListener("mousedown", checkIfClickedOutside);
 
     return () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [showFilter]);
+
+  const toggleActiveClass = (e) => {
+
+    const nearest = document.getElementById("nearest-rides");
+    const upcoming = document.getElementById("upcoming-rides");
+    const past = document.getElementById("past-rides");
+
+    nearest.contains(e.target) && setResult(sortedRides) ;
+    upcoming.contains(e.target) && setResult(upcomingRides);
+    past.contains(e.target) && setResult(pastRides);
+
+   e.target.classList.add("active-link")
+
+   
+
+  
+  };
 
   return (
     <div>
@@ -97,13 +116,21 @@ export default function Home() {
       </Head>
       <nav>
         <ul>
-          <li onClick={() => setResult(rides)}>
+          <li
+            id="nearest-rides"
+            className="nav-item active-link"
+            onClick={toggleActiveClass}
+          >
             Nearest Rides ({rides.length})
           </li>
-          <li onClick={() => setResult(upcomingRides)}>
+          <li
+            id="upcoming-rides"
+            className="nav-item"
+            onClick={toggleActiveClass}
+          >
             Upcoming Rides ({upcomingRides.length})
           </li>
-          <li onClick={() => setResult(pastRides)}>
+          <li id="past-rides" className="nav-item" onClick={toggleActiveClass}>
             Past Rides ({pastRides.length})
           </li>
         </ul>
@@ -149,19 +176,30 @@ export default function Home() {
       </nav>
       <div className="ride-container">
         {result.length > 0
-          ? result.map(({ id, origin_station_code, station_path, date }) => {
-              let distance = calculateDistance(station_path);
-              return (
-                <Ride
-                  key={id}
-                  id={id}
-                  originStationCode={origin_station_code}
-                  stationPath={station_path}
-                  date={date}
-                  distance={distance}
-                />
-              );
-            })
+          ? result.map(
+              ({
+                id,
+                origin_station_code,
+                station_path,
+                date,
+                state,
+                city,
+              }) => {
+                let distance = calculateDistance(station_path);
+                return (
+                  <Ride
+                    key={id}
+                    id={id}
+                    originStationCode={origin_station_code}
+                    stationPath={station_path}
+                    date={date}
+                    distance={distance}
+                    state={state}
+                    city={city}
+                  />
+                );
+              }
+            )
           : "No result found"}
       </div>
     </div>
