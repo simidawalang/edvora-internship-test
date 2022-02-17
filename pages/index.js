@@ -101,10 +101,6 @@ export default function Home() {
     past.contains(e.target) && setResult(pastRides);
 
    e.target.classList.add("active-link")
-
-   
-
-  
   };
 
   return (
