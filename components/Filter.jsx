@@ -8,4 +8,6 @@ const Filter = forwardRef(({children}, ref) => {
     );
 });
 
+Filter.displayName = "Filter";
+
 export default Filter;
